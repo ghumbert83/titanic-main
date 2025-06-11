@@ -68,4 +68,10 @@ def prepare_data(df:pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
     from sklearn.preprocessing import OneHotEncoder
     categorical_features = ["Sex", "Embarked"]
     encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore', drop='first').set_output(transform="pandas")
-    
+    df_encoded = encoder.fit_transform(df[categorical_features])
+    df_final = pd.concat([df_scaled, df_encoded], axis=1).drop(columns=["Sex", "Embarked"])
+
+    X = df_final.drop(columns=["Survived"])
+    y = df_final["Survived"]
+
+    return X, y
