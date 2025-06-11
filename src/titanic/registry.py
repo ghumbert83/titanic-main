@@ -18,7 +18,7 @@ def save_model(model, path: str, filename: str) -> None:
     if not os.path.exists(path):
         os.makedirs(path)
 
-    with open(os.path.join(path, filename, "wb")) as f:
+    with open(os.path.join(path, filename), "wb") as f:
         pickle.dump(model, f)
 
 
