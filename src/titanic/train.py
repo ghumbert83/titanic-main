@@ -10,7 +10,6 @@ def train_model() -> object:
     """
     Initiate the model and train it on the Titanic dataset.""
     """
-
     train_df, _ = load_data()
     train_df_cleaned = clean_data(train_df)
     X_train, y_train = prepare_data(train_df_cleaned)
@@ -26,5 +25,16 @@ def evaluate_model(model):
     model.score(X_test, y_test)
 
 
-def optimize_model(model):
-    pass
+from sklearn.model_selection import GridSearchCV
+def optimize_model(model, X_train, y_train, X_test, y_test) -> object:
+    param_grid = {
+        'C': [0.01, 0.1, 1, 10, 100],
+        'penalty': ['l1', 'l2'],
+        'solver': ['liblinear', 'saga']
+    }
+    grid_search = GridSearchCV(model, param_grid, cv=5, scoring='accuracy', n_jobs=-1, verbose=1)
+    grid_search.fit(X_train, y_train)
+    print("Best parameters:", grid_search.best_params_, "Best score:", grid_search.best_score_)
+    best_model = grid_search.best_estimator_
+    return best_model
+
