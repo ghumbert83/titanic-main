@@ -8,7 +8,9 @@ from sklearn.linear_model import LogisticRegression
 
 def train_model() -> object:
     """
-    Initiate the model and train it on the Titanic dataset.""
+    Train the Titanic model using logistic regression.
+    Returns:
+        object: The trained logistic regression model.
     """
     train_df, _ = load_data()
     train_df_cleaned = clean_data(train_df)
@@ -18,15 +20,31 @@ def train_model() -> object:
     return model
 
 
-def evaluate_model(model):
+def evaluate_model(model) -> None:
+    """
+    Evaluate the trained model on the test dataset.
+    Args:
+        model (object): The trained model to evaluate.
+    """
     _, test_df = load_data()
     test_cleaned_df = clean_data(test_df)
     X_test, y_test = prepare_data(test_cleaned_df)
-    model.score(X_test, y_test)
+    print("Model evaluation completed. Accuracy:", model.score(X_test, y_test))
 
 
 from sklearn.model_selection import GridSearchCV
-def optimize_model(model, X_train, y_train, X_test, y_test) -> object:
+def optimize_model(model) -> object:
+    """
+    Optimize the model using GridSearchCV.
+    Args:
+        model (object): The model to optimize.
+    Returns:
+        object: The optimized model.
+    """
+
+    train_df, _ = load_data()
+    train_df_cleaned = clean_data(train_df)
+    X_train, y_train = prepare_data(train_df_cleaned)
     param_grid = {
         'C': [0.01, 0.1, 1, 10, 100],
         'penalty': ['l1', 'l2'],
@@ -38,3 +56,13 @@ def optimize_model(model, X_train, y_train, X_test, y_test) -> object:
     best_model = grid_search.best_estimator_
     return best_model
 
+
+if __name__ == "__main__":
+    model = train_model()
+    print("Model trained successfully.", model)
+    evaluate_model(model)
+    print("Model evaluation completed.")
+    opti_model = optimize_model(model)
+    print("Model optimized successfully.", opti_model)
+    evaluate_model(opti_model)
+    print("Optimized model evaluation completed.")
