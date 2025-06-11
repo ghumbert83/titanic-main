@@ -1,4 +1,4 @@
-# Python 
+# Python
 .ipynb_checkpoints
 __pycache__/
 *.py[cod]
@@ -7,12 +7,13 @@ __pycache__/
 # Virtual environments
 venv/
 .python-version
-
+.env
+.envrc
 
 # Data & models
 data/*.csv
 models/*.pkl
 
-# MAC 
+# MAC
 .DS_Store
 

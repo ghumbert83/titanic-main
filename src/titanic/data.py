@@ -3,17 +3,16 @@ Load, preprocess, prepare, and save the Titanic dataset.
 """
 
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
 import os
 
 DATA_DIR = "data/"
 
-def load_data():
+from pandas import DataFrame
+
+def load_data() -> tuple[DataFrame, DataFrame]:
     """
     Load the Titanic dataset from a CSV file.
-    
+
     Returns:
         DataFrame: The loaded Titanic dataset.
     """
@@ -26,22 +25,22 @@ def load_data():
                    , right_index=True
                    , how='left'
                    , suffixes=('', '_target')).copy()
-    
+
     return train_df, test_df
 
-       
-def clean_data(df):
+
+def clean_data(df) -> DataFrame:
     """
     clean the Titanic dataset.
-    
+
     Args:
         df (DataFrame): The Titanic dataset.
-        
+
     Returns:
         DataFrame: The preprocessed Titanic dataset.
     """
     df.drop(columns=['Name', 'Ticket', 'Cabin'], inplace=True)
-    
+
     from sklearn.impute import SimpleImputer
     imputer = SimpleImputer().set_output(transform="pandas")
     imputer.fit(df[['Age']])
@@ -51,13 +50,13 @@ def clean_data(df):
 
     return df
 
-def prepare_data(df:pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]: 
+def prepare_data(df:pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
     """
     Prepare the Titanic dataset for training.
-    
+
     Args:
         df (DataFrame): The preprocessed Titanic dataset.
-        
+
     Returns:
         tuple: A tuple containing [X,y] the features DataFrame and the target Series.
     """
