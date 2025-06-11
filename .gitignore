@@ -1,0 +1,18 @@
+# Python 
+.ipynb_checkpoints
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environments
+venv/
+.python-version
+
+
+# Data & models
+data/*.csv
+models/*.pkl
+
+# MAC 
+.DS_Store
+
